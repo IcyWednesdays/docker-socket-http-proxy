@@ -1,4 +1,4 @@
-# docker-socket-http-api
+# docker-socket-http-proxy
 
 A local HTTP server for proxying requests to the Docker socket. Useful in scenarios where direct connectivity to Unix sockets is not possible (e.g. frontend clients).
 
@@ -9,7 +9,7 @@ To start the HTTP server, clone this repository and run:
 ```bash
 $ cargo run
 
-Server listening on http://127.0.0.1:8080
+Server listening on http://0.0.0.0:8080
 ```
 
 ### Via Docker
