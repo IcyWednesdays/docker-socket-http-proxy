@@ -30,7 +30,7 @@ async fn handle_request(
 
 #[tokio::main]
 pub async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
-    let addr = SocketAddr::from(([127, 0, 0, 1], 8080));
+    let addr = SocketAddr::from(([0, 0, 0, 0], 8080));
     let make_svc = make_service_fn(|_conn| async {
         Ok::<_, Box<dyn Error + Send + Sync>>(service_fn(handle_request))
     });

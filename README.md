@@ -12,6 +12,14 @@ $ cargo run
 Server listening on http://127.0.0.1:8080
 ```
 
+### Via Docker
+
+You can also build and run the server in Docker:
+
+```bash
+$ docker-compose up api
+```
+
 The server will pass through any requests directly to the Docker daemon. You can check out the list of supported endpoints [in the Docker documentation](https://docs.docker.com/engine/api/v1.24/#3-endpoints).
 
 For example, to query all images on your system:
@@ -22,4 +30,4 @@ $ curl -s http://localhost:8080/images/json
 
 ## To-do
 
-- [ ] Public Docker hub image
+- [ ] Public Docker hub image w/ CI
