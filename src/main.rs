@@ -1,4 +1,5 @@
 use hyper::{
+    header::HeaderValue,
     service::{make_service_fn, service_fn},
     Body, Client, Request, Response, Server,
 };
@@ -25,7 +26,13 @@ async fn handle_request(
     println!("Response from {}: {}", req_path, resp.status());
 
     let (parts, body) = resp.into_parts();
-    Ok(Response::from_parts(parts, body))
+    let mut response = Response::from_parts(parts, body);
+
+    response
+        .headers_mut()
+        .insert("Access-Control-Allow-Origin", HeaderValue::from_static("*"));
+
+    Ok(response)
 }
 
 async fn shutdown_signal() {
