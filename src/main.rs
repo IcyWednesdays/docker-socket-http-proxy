@@ -28,6 +28,12 @@ async fn handle_request(
     Ok(Response::from_parts(parts, body))
 }
 
+async fn shutdown_signal() {
+    tokio::signal::ctrl_c()
+        .await
+        .expect("Failed to Ctrl+C out of server");
+}
+
 #[tokio::main]
 pub async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
     let addr = SocketAddr::from(([0, 0, 0, 0], 8080));
@@ -37,7 +43,12 @@ pub async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
 
     let server = Server::bind(&addr).serve(make_svc);
     println!("Server listening on http://{}", addr);
-    server.await?;
+
+    let graceful = server.with_graceful_shutdown(shutdown_signal());
+
+    if let Err(e) = graceful.await {
+        eprintln!("server error: {}", e);
+    }
 
     Ok(())
 }
